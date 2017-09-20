@@ -127,4 +127,22 @@ $(document).ready(function(){
         });
     })
 
+    $('#filter_categories').change(function () {
+        var filter = $('#filter_categories').val();
+        if(!getFilter(window.location.href)) {
+            window.location.href = window.location.href + '&filter=' + filter;
+        }else{
+            window.location.href = getFilter(window.location.href) + '&filter=' + filter;
+        }
+    });
+
+    function getFilter(url) {
+        var mass = url.split('&');
+        if(mass.length < 2){
+            return false;
+        }else{
+            return mass[0];
+        }
+    }
+
 });

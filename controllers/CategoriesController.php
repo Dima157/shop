@@ -17,14 +17,32 @@ use yii\db\Query;
 class CategoriesController extends Controller
 {
 
-    function actionAll($id){
+    function actionAll($id, $filter = null){
         $query = new Query();
         $products = Product::find()->where(['categories_id' => $id])->all();
         $pages = new Pagination(['totalCount' => count($products), 'pageSize' => 10]);
         $pages->pageSizeParam = false;
-        $products = Product::find()->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        switch($filter){
+            case null:
+            case 'normal':
+            $products = Product::find()->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+            break;
+            case 'min': $products = Product::find()->orderBy(['price' => SORT_ASC])->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+            break;
+            case 'max':$products = Product::find()->orderBy(['price' => SORT_DESC])->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+            break;
+        }
+        if($filter == null || $filter == 'normal') {
+            $products = Product::find()->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+        }
         return $this->render('all', ['products' => $products, 'pages' => $pages]);
     }
 }
