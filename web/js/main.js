@@ -63,8 +63,8 @@ $(document).ready(function(){
     })
 
     $('.add-cart').click(function () {
-        var parent = $(this).parents();
-        var product_id = parent.attr('data-id');
+        var parent = $(this).parent().parent().parent();
+        var product_id = parent.data('id');
         alert(product_id);
         $.ajax({
             url : "/cart/add",
@@ -144,5 +144,20 @@ $(document).ready(function(){
             return mass[0];
         }
     }
+
+    $('.fa-times').click(function () {
+        var parent = $(this).parent().parent();
+        var this_price = parseFloat(parent.find('#price').html());
+        var total_price = parseFloat($('.total-price').html());
+        total_price -= this_price;
+        $('.total-price').text(total_price);
+        var id = parent.data('cart');
+        parent.remove();
+        $.ajax({
+            url: "/cart/delete",
+            data: 'id=' + id,
+            type: 'POST'
+        })
+    })
 
 });

@@ -57,4 +57,12 @@ class CartController extends Controller{
         }
     }
 
+    function actionDelete(){
+        if(\Yii::$app->request->isAjax){
+            $id = \Yii::$app->request->post('id');
+            $cart = Cart::findOne($id);
+            $cart->delete();
+        }
+    }
+
 } 

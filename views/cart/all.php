@@ -8,7 +8,7 @@ use yii\bootstrap\Modal;
         <div>Сумма</div>
     </div>
 <?foreach ($cart as  $one):?>
-    <div data-id="<?=$one->product->id?>" class="all_item">
+    <div data-id="<?=$one->product->id?>"data-cart="<?=$one->id?>" class="all_item">
         <div class="img_cart">
             <img src="<?= $one->product->getImg()[0]['path'] ?>" alt="no">
         </div>
@@ -19,6 +19,9 @@ use yii\bootstrap\Modal;
             <span class="fa fa-plus add-to-cart"></span>
         </div>
         <div id="price"><?=$one->getPrice($one->product->price)?></div>
+        <div>
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
     </div>
 <?endforeach;?>
     <div class="total_sum">

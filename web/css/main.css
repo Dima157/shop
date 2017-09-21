@@ -197,8 +197,12 @@ a{
     border-bottom: 1px solid black;
 }
 
-.all_item>div{
-    width: 25%;
+.all_item>div:not(:last-child){
+    width: 24%;
+}
+
+.all_item>div:last-child{
+    width: 4%;
 }
 
 .img_cart>img{
